@@ -11,10 +11,13 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        menu.add(new ItemMenu("Hamburguer", "Lanche", 15.90));
-        menu.add(new ItemMenu("Pizza", "Lanche", 25.50));
-        menu.add(new ItemMenu("Refrigerante", "Bebida", 5.00));
-        menu.add(new ItemMenu("Suco Natural", "Bebida", 7.50));
+        menu.add(new ItemMenu("Arroz com Carne de Sol", "Porcao - Arroz com Carne de Sol", 32.75));
+        menu.add(new ItemMenu("Hamburguer", "Lanche - Hamburguer", 15.90));
+        menu.add(new ItemMenu("Cuzcuz Gourmet", "Lanche - Cuzcuz Gourmet", 12.50));
+        menu.add(new ItemMenu("Pizza", "Lanche - Pizza", 25.50));
+        menu.add(new ItemMenu("Refrigerante", "Bebida - Refrigerante", 5.00));
+        menu.add(new ItemMenu("Suco Natural", "Bebida - Suco Natural", 7.50));
+        menu.add(new ItemMenu("Caipirinha", "Bebida - Refrigerante", 55.00));
 
         while (true) {
             System.out.println("\nBem-vindo ao Sabor Gourmet! Escolha uma opcao:");
