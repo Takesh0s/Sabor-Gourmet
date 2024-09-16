@@ -17,7 +17,7 @@ public class Main {
         menu.add(new ItemMenu("Pizza", "Lanche", 25.50));
         menu.add(new ItemMenu("Refrigerante", "Bebida", 5.00));
         menu.add(new ItemMenu("Suco Natural", "Bebida", 7.50));
-        menu.add(new ItemMenu("Caipirinha", "Bebida", 55.00));
+        menu.add(new ItemMenu("Caipirinha", "Bebida Alcoolica", 55.00));
 
         while (true) {
             System.out.println("\nBem-vindo ao Sabor Gourmet! Escolha uma opcao:");
