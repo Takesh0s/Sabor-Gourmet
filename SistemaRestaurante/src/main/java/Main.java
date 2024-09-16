@@ -2,7 +2,7 @@ package SistemaRestaurante;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-    
+
 public class Main {
     private static ArrayList<Cliente> clientes = new ArrayList<>();
     private static ArrayList<ItemMenu> menu = new ArrayList<>();
@@ -11,13 +11,13 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        menu.add(new ItemMenu("Arroz com Carne de Sol", "Porcao - Arroz com Carne de Sol", 32.75));
-        menu.add(new ItemMenu("Hamburguer", "Lanche - Hamburguer", 15.90));
-        menu.add(new ItemMenu("Cuzcuz Gourmet", "Lanche - Cuzcuz Gourmet", 12.50));
-        menu.add(new ItemMenu("Pizza", "Lanche - Pizza", 25.50));
-        menu.add(new ItemMenu("Refrigerante", "Bebida - Refrigerante", 5.00));
-        menu.add(new ItemMenu("Suco Natural", "Bebida - Suco Natural", 7.50));
-        menu.add(new ItemMenu("Caipirinha", "Bebida - Refrigerante", 55.00));
+        menu.add(new ItemMenu("Arroz com Carne de Sol", "Porcao", 32.75));
+        menu.add(new ItemMenu("Hamburguer", "Lanche", 15.90));
+        menu.add(new ItemMenu("Cuzcuz Gourmet", "Lanche", 12.50));
+        menu.add(new ItemMenu("Pizza", "Lanche", 25.50));
+        menu.add(new ItemMenu("Refrigerante", "Bebida", 5.00));
+        menu.add(new ItemMenu("Suco Natural", "Bebida", 7.50));
+        menu.add(new ItemMenu("Caipirinha", "Bebida", 55.00));
 
         while (true) {
             System.out.println("\nBem-vindo ao Sabor Gourmet! Escolha uma opcao:");
@@ -25,7 +25,13 @@ public class Main {
             System.out.println("2. Visualizar Menu");
             System.out.println("3. Fazer Pedido");
             System.out.println("4. Acompanhar Pedido");
-            System.out.println("5. Sair");
+
+            if (!clientes.isEmpty()) {
+                System.out.println("5. Visualizar Dados do Cliente");
+            }
+
+            System.out.println("6. Sair");
+            System.out.print("Opcao: ");
             int opcao = scanner.nextInt();
             scanner.nextLine();
 
@@ -41,12 +47,14 @@ public class Main {
                     clientes.add(novoCliente);
                     System.out.println("Cliente cadastrado com sucesso!");
                     break;
+
                 case 2:
                     System.out.println("---- Menu ----");
                     for (ItemMenu item : menu) {
                         System.out.println(item.getDetalhesItem());
                     }
                     break;
+
                 case 3:
                     System.out.print("Digite o nome do cliente: ");
                     String nomeCliente = scanner.nextLine();
@@ -60,7 +68,7 @@ public class Main {
                     Pedido novoPedido = new Pedido(cliente);
 
                     while (true) {
-                        System.out.println("Escolha um item do menu (digite o nome ou 'fim' para finalizar): ");
+                        System.out.print("Escolha um item do menu (digite o nome ou 'fim' para finalizar): ");
                         String nomeItem = scanner.nextLine();
 
                         if (nomeItem.equalsIgnoreCase("fim")) {
@@ -71,21 +79,22 @@ public class Main {
                         if (item != null) {
                             novoPedido.adicionarItem(item);
                         } else {
-                            System.out.println("Item não encontrado.");
+                            System.out.println("Item nao encontrado.");
                         }
                     }
 
-                    System.out.println("Pedido finalizado!");
+                    System.out.println("\nPedido finalizado!");
                     pedidos.add(novoPedido);
                     novoPedido.visualizarPedido();
                     break;
+
                 case 4:
                     System.out.print("Digite o nome do cliente: ");
                     nomeCliente = scanner.nextLine();
                     cliente = encontrarCliente(nomeCliente);
 
                     if (cliente == null) {
-                        System.out.println("Cliente não encontrado.");
+                        System.out.println("Cliente nao encontrado.");
                         break;
                     }
 
@@ -93,16 +102,35 @@ public class Main {
                     if (pedido != null) {
                         pedido.visualizarPedido();
                     } else {
-                        System.out.println("Pedido não encontrado.");
+                        System.out.println("Pedido nao encontrado.");
                     }
                     break;
+
                 case 5:
+                    if (!clientes.isEmpty()) {
+                        System.out.print("Digite o nome do cliente para visualizar os dados: ");
+                        nomeCliente = scanner.nextLine();
+                        cliente = encontrarCliente(nomeCliente);
+
+                        if (cliente != null) {
+                            cliente.visualizarCliente();
+                        } else {
+                            System.out.println("Cliente nao encontrado.");
+                        }
+                    } else {
+                        System.out.println("Nenhum cliente cadastrado.");
+                    }
+                    break;
+
+                case 6:
                     System.out.println("Encerrando sistema...");
                     System.exit(0);
                     break;
+
                 default:
-                    System.out.println("Opcao inválida. Tente novamente.");
+                    System.out.println("Opcao invalida. Tente novamente.");
             }
+            System.out.println();
         }
     }
 
@@ -126,7 +154,7 @@ public class Main {
 
     private static Pedido encontrarPedidoPorCliente(Cliente cliente) {
         for (Pedido pedido : pedidos) {
-            if (pedido.getStatus().equals("Em preparação")) {
+            if (pedido.getCliente().equals(cliente)) {
                 return pedido;
             }
         }
